@@ -1,8 +1,6 @@
-package com.sunnyz.iiwebapi.controller;
+package com.sunnyz.iiwebapi.user;
 
 import com.sunnyz.iiwebapi.base.*;
-import com.sunnyz.iiwebapi.entity.User;
-import com.sunnyz.iiwebapi.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;

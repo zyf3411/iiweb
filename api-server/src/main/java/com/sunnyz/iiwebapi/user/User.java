@@ -1,4 +1,4 @@
-package com.sunnyz.iiwebapi.entity;
+package com.sunnyz.iiwebapi.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sunnyz.iiwebapi.base.BaseEntity;

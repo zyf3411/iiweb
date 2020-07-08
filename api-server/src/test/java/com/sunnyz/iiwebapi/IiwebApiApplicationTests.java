@@ -1,8 +1,8 @@
 package com.sunnyz.iiwebapi;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sunnyz.iiwebapi.entity.User;
-import com.sunnyz.iiwebapi.service.UserService;
+import com.sunnyz.iiwebapi.user.User;
+import com.sunnyz.iiwebapi.user.UserService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

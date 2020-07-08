@@ -1,4 +1,4 @@
-package com.sunnyz.iiwebapi.repository;
+package com.sunnyz.iiwebapi.base;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

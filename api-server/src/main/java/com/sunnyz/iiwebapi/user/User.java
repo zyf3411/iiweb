@@ -8,7 +8,7 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "iiweb_user")
@@ -82,15 +82,16 @@ public class User extends BaseEntity {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "iiweb_user_role",
-            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")}
     )
-    private Collection<Role> roles;
+    private List<Role> roles;
 
-    public Collection<Role> getRoles() {
+    public List<Role> getRoles() {
         return roles;
     }
-    public void setRoles(Collection<Role> roles) {
+
+    public void setRoles(List<Role> roles) {
         this.roles = roles;
     }
 }

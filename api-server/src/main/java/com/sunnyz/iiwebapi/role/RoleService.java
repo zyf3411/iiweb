@@ -19,8 +19,8 @@ public class RoleService {
         return roleRepository.findById(id);
     }
 
-    public Role save(Role user) {
-        return roleRepository.save(user);
+    public Role save(Role role) {
+        return roleRepository.save(role);
     }
 
     public void delete(Integer id) {

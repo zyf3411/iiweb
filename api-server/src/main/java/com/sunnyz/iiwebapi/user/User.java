@@ -2,14 +2,13 @@ package com.sunnyz.iiwebapi.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sunnyz.iiwebapi.base.BaseEntity;
+import com.sunnyz.iiwebapi.role.Role;
 import org.hibernate.annotations.Where;
 
-
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
+import java.util.Collection;
 
 @Entity
 @Table(name = "iiweb_user")
@@ -78,4 +77,20 @@ public class User extends BaseEntity {
         this.property2 = property2;
     }
 
+
+    //用户>角色列表
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "iiweb_user_role",
+            joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id")
+    )
+    private Collection<Role> roles;
+
+    public Collection<Role> getRoles() {
+        return roles;
+    }
+    public void setRoles(Collection<Role> roles) {
+        this.roles = roles;
+    }
 }

@@ -15,8 +15,8 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/findById")
-    public AjaxResponse findById(Integer id) {
+    @GetMapping("/{id}")
+    public AjaxResponse get(@PathVariable("id") Integer id) {
         User user = userService.findById(id).orElseThrow(() -> new BizException("用户不存在"));
         return AjaxResponse.success(user);
     }

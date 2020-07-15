@@ -2,6 +2,7 @@ package com.sunnyz.iiwebapi.user;
 
 import com.sunnyz.iiwebapi.base.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -47,6 +48,7 @@ public class UserController {
         return AjaxResponse.success();
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/del")
     public AjaxResponse del(@RequestParam(value = "ids[]") Integer[] ids) {
         for (Integer id : ids) {

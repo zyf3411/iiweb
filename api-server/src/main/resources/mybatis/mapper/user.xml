@@ -6,29 +6,29 @@
 
     <!--获取分页列表-->
     <select id="getAll" resultType="java.util.Map">
-        SELECT hdr.*,
+        SELECT u.*,
         'enum:status=USER_STATUS' as `status_desc`
-        FROM iiweb_user hdr
+        FROM iiweb_user u
         where 1=1
         <if test="createdDateFrom != null  and createdDateFrom != ''">
-            and hdr.created_date >= #{createdDateFrom}
+            and u.created_date >= #{createdDateFrom}
         </if>
         <if test="createdDateTo != null  and createdDateTo != ''">
-            and hdr.created_date &lt;= #{createdDateTo}
+            and u.created_date &lt;= #{createdDateTo}
         </if>
         <if test="statusFrom != null  and statusFrom != ''">
-            and hdr.status >= #{statusFrom}
+            and u.status >= #{statusFrom}
         </if>
         <if test="statusTo != null  and statusTo != ''">
-            and hdr.status &lt;= #{statusTo}
+            and u.status &lt;= #{statusTo}
         </if>
         <if test="name != null  and name != ''" >
-            and hdr.name = #{name}
+            and u.name = #{name}
         </if>
         <if test="realname != null  and realname != ''" >
-            and hdr.realname = #{realname}
+            and u.realname = #{realname}
         </if>
-        and hdr.status &lt; 99 order by hdr.id desc
+        and u.status &lt; 99 order by u.id desc
     </select>
 
 </mapper>

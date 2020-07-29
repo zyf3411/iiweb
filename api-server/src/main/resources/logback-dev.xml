@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration debug="true">
 
-    <turboFilter class="cn.fcgyl.common.MySQLLogFilter">
+    <turboFilter class="com.sunnyz.iiwebapi.config.MySQLLogFilter">
         <ShowCaller>true</ShowCaller>
         <HideFieldsInSelect>true</HideFieldsInSelect>
         <CallerPackageInclude>com.sunnyz</CallerPackageInclude>

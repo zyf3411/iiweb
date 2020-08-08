@@ -1,12 +1,18 @@
 package com.sunnyz.iiwebapi.user;
 
 import com.sunnyz.iiwebapi.base.*;
+import com.sunnyz.iiwebapi.util.orm.QueryBuilder;
+import com.sunnyz.iiwebapi.util.orm.SortType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 @RestController
@@ -15,6 +21,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     @GetMapping("/{id}")
     public AjaxResponse get(@PathVariable("id") Integer id) {
@@ -39,8 +48,7 @@ public class UserController {
         }
         user.setName(userModel.getName());
         user.setRealname(userModel.getRealname());
-        //TODO 加密
-        user.setPassword(userModel.getPassword());
+        user.setPassword(passwordEncoder.encode(userModel.getPassword()));
         user.setEmail(userModel.getEmail());
         user.setProperty1(userModel.getProperty1());
         user.setProperty2(userModel.getProperty2());
@@ -56,4 +64,61 @@ public class UserController {
         }
         return AjaxResponse.success();
     }
+
+
+    //region jpa 构建动态查询
+
+    @GetMapping("/list")
+    public AjaxResponse list() {
+        //构造查询表达式
+        QueryBuilder queryBuilder = new QueryBuilder().setEqual("name", "jack");
+
+        return AjaxResponse.success(userService.findAll(queryBuilder.getQueries()));
+    }
+
+    @GetMapping("/listP")
+    public AjaxResponse listP(@RequestParam(value = "page", defaultValue = "1", required = false) Integer page,
+                              @RequestParam(value = "size", defaultValue = "15", required = false) Integer size,
+                              UserRequest request) {
+
+        //region search parameter
+        QueryBuilder queryBuilder = new QueryBuilder()
+                .setLike("name", request.getName())
+                .setLike("realname", request.getRealname())
+                .setGreatThanEqual("createDate", request.getDataFrom())
+                .setLessThanEqual("createDate", request.getDataTo());
+        //endregion
+
+        //sort[可选择]
+        Map<String, SortType> sorts = new HashMap<>();
+        sorts.put("status", SortType.desc);
+
+        Page<User> users = userService.findAll(queryBuilder.getQueries(), page, size, sorts);
+
+        return AjaxResponse.success(new PageDto(page, users.getTotalElements(), users.getContent()));
+    }
+
+    public class UserRequest extends User {
+
+        private String dataFrom;
+        private String dataTo;
+
+        public String getDataFrom() {
+            return dataFrom;
+        }
+
+        public void setDataFrom(String dataFrom) {
+            this.dataFrom = dataFrom;
+        }
+
+        public String getDataTo() {
+            return dataTo;
+        }
+
+        public void setDataTo(String dataTo) {
+            this.dataTo = dataTo;
+        }
+    }
+
+    //endregion
 }
